@@ -42,7 +42,7 @@ npm run build      # production build
 
 ## Live demo
 
-The production URL will be added here after the first Vercel deploy.
+**https://doccraft-tau.vercel.app**
 
 ## License
 
