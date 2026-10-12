@@ -1,0 +1,343 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   DocCraft design tokens — "studio chrome" (dark shell,
+   paper canvas). All UI surfaces read from these variables.
+   ============================================================ */
+@layer base {
+  :root {
+    --background: 228 14% 7%;
+    --foreground: 220 14% 92%;
+    --surface: 228 13% 10%;
+    --surface-2: 227 12% 13%;
+    --primary: 217 91% 60%;
+    --primary-foreground: 220 26% 98%;
+    --secondary: 227 12% 16%;
+    --secondary-foreground: 220 12% 86%;
+    --muted: 227 11% 15%;
+    --muted-foreground: 222 11% 58%;
+    --accent: 227 13% 19%;
+    --accent-foreground: 220 14% 94%;
+    --popover: 228 14% 9%;
+    --popover-foreground: 220 14% 92%;
+    --border: 226 12% 18%;
+    --input: 226 12% 22%;
+    --ring: 217 91% 60%;
+    --radius: 0.625rem;
+  }
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  @apply bg-background text-foreground antialiased;
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* ---------- Scrollbars (thin, themed) ---------- */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--border)) transparent;
+}
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-thumb {
+  background: hsl(var(--border));
+  border-radius: 8px;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground) / 0.5);
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* ---------- CodeMirror ---------- */
+.cm-editor {
+  height: 100%;
+  font-size: 13.5px;
+}
+.cm-editor .cm-scroller {
+  font-family: var(--font-geist-mono), ui-monospace, "SFMono-Regular", monospace;
+  line-height: 1.7;
+  padding: 0 0.5rem;
+}
+.cm-editor.cm-focused {
+  outline: none;
+}
+
+/* ============================================================
+   Preview typography — scoped per theme.
+   These rules are what html2canvas rasterises into PDF/image
+   exports, so screen and export stay pixel-identical.
+   ============================================================ */
+
+.dc-preview {
+  padding: 3.25rem 3.75rem;
+  font-size: 16px;
+  line-height: 1.75;
+  word-wrap: break-word;
+  font-feature-settings: "liga" 1, "calt" 1;
+}
+.dc-preview > :first-child {
+  margin-top: 0;
+}
+.dc-preview h1,
+.dc-preview h2,
+.dc-preview h3,
+.dc-preview h4 {
+  margin: 1.6em 0 0.65em;
+  line-height: 1.25;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+.dc-preview h1 {
+  font-size: 2.1em;
+  letter-spacing: -0.025em;
+  padding-bottom: 0.4em;
+}
+.dc-preview h2 {
+  font-size: 1.45em;
+  padding-bottom: 0.35em;
+}
+.dc-preview h3 {
+  font-size: 1.18em;
+}
+.dc-preview p {
+  margin: 1em 0;
+}
+.dc-preview a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
+}
+.dc-preview ul,
+.dc-preview ol {
+  margin: 1em 0;
+  padding-left: 1.65em;
+}
+.dc-preview ul {
+  list-style: disc;
+}
+.dc-preview ol {
+  list-style: decimal;
+}
+.dc-preview li + li {
+  margin-top: 0.35em;
+}
+.dc-preview li input[type="checkbox"] {
+  margin-right: 0.55em;
+}
+.dc-preview blockquote {
+  margin: 1.3em 0;
+  padding: 0.75em 1.25em;
+  border-left-width: 3px;
+  border-left-style: solid;
+  border-radius: 0 8px 8px 0;
+  font-style: italic;
+}
+.dc-preview code {
+  font-family: var(--font-geist-mono), ui-monospace, "SFMono-Regular", monospace;
+  font-size: 0.86em;
+  padding: 0.18em 0.45em;
+  border-radius: 5px;
+}
+.dc-preview pre {
+  margin: 1.3em 0;
+  padding: 1.1em 1.35em;
+  border-radius: 10px;
+  overflow-x: auto;
+}
+.dc-preview pre code {
+  padding: 0;
+  background: transparent;
+}
+.dc-preview table {
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 1.4em 0;
+  width: 100%;
+  font-size: 0.94em;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.dc-preview th,
+.dc-preview td {
+  border: 1px solid;
+  padding: 0.6em 0.95em;
+  text-align: left;
+}
+.dc-preview th {
+  font-weight: 600;
+  font-size: 0.92em;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.dc-preview hr {
+  border: none;
+  border-top-width: 1px;
+  border-top-style: solid;
+  margin: 2em 0;
+}
+.dc-preview img {
+  max-width: 100%;
+  border-radius: 8px;
+}
+
+/* Theme: Clean Light — crisp white paper, blue accent */
+.theme-clean.dc-preview {
+  color: #303642;
+}
+.theme-clean.dc-preview h1,
+.theme-clean.dc-preview h2 {
+  border-bottom: 1px solid #e8eaef;
+  color: #14181f;
+}
+.theme-clean.dc-preview a {
+  color: #2563eb;
+}
+.theme-clean.dc-preview code {
+  background: #f1f3f7;
+  color: #b3267e;
+}
+.theme-clean.dc-preview pre {
+  background: #f6f8fa;
+  border: 1px solid #e8eaef;
+}
+.theme-clean.dc-preview blockquote {
+  border-left-color: #2563eb;
+  background: #f0f5ff;
+  color: #3d4759;
+}
+.theme-clean.dc-preview th {
+  background: #f1f3f7;
+}
+.theme-clean.dc-preview th,
+.theme-clean.dc-preview td {
+  border-color: #e8eaef;
+}
+.theme-clean.dc-preview hr {
+  border-top-color: #e8eaef;
+}
+
+/* Theme: Dark Mode — graphite paper, sky accent */
+.theme-dark.dc-preview {
+  color: #c9ced8;
+}
+.theme-dark.dc-preview h1,
+.theme-dark.dc-preview h2 {
+  border-bottom: 1px solid #2c313c;
+  color: #f2f4f8;
+}
+.theme-dark.dc-preview a {
+  color: #60a5fa;
+}
+.theme-dark.dc-preview code {
+  background: #262b35;
+  color: #f0abfc;
+}
+.theme-dark.dc-preview pre {
+  background: #1a1e26;
+  border: 1px solid #2c313c;
+}
+.theme-dark.dc-preview blockquote {
+  border-left-color: #60a5fa;
+  background: #1e2634;
+  color: #aab3c2;
+}
+.theme-dark.dc-preview th {
+  background: #262b35;
+}
+.theme-dark.dc-preview th,
+.theme-dark.dc-preview td {
+  border-color: #2c313c;
+}
+.theme-dark.dc-preview hr {
+  border-top-color: #2c313c;
+}
+
+/* Theme: Minimalist Serif — warm cream, amber accent, editorial */
+.theme-serif.dc-preview {
+  font-family: Georgia, "Times New Roman", serif;
+  color: #46403a;
+  font-size: 17px;
+  line-height: 1.82;
+}
+.theme-serif.dc-preview h1,
+.theme-serif.dc-preview h2,
+.theme-serif.dc-preview h3,
+.theme-serif.dc-preview h4 {
+  font-weight: 600;
+  letter-spacing: 0.005em;
+  color: #211d19;
+}
+.theme-serif.dc-preview h1,
+.theme-serif.dc-preview h2 {
+  border-bottom: 1px solid #e5ddcf;
+}
+.theme-serif.dc-preview a {
+  color: #a16207;
+}
+.theme-serif.dc-preview code {
+  background: #f0eadb;
+  color: #7c2d12;
+}
+.theme-serif.dc-preview pre {
+  background: #f5efe2;
+  border: 1px solid #e5ddcf;
+}
+.theme-serif.dc-preview blockquote {
+  border-left-color: #a16207;
+  background: #f7f1e3;
+}
+.theme-serif.dc-preview th {
+  background: #f0eadb;
+}
+.theme-serif.dc-preview th,
+.theme-serif.dc-preview td {
+  border-color: #e5ddcf;
+}
+.theme-serif.dc-preview hr {
+  border-top-color: #e5ddcf;
+}
+
+/* Export-in-progress: remove scroll clipping so html2canvas
+   captures the full document height */
+.dc-exporting {
+  overflow: visible !important;
+  height: auto !important;
+}
+
+/* ---------- Micro-animations ---------- */
+@keyframes dc-toast-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 8px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+.dc-toast {
+  animation: dc-toast-in 180ms ease-out;
+}
+
+@keyframes dc-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.dc-fade-in {
+  animation: dc-fade-in 250ms ease-out;
+}
